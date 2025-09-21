@@ -3,297 +3,457 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>StudyMatch – Protótipo (integrado)</title>
+  <title>StudyMatch – Protótipo (Home + Voltar)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f7f9fc;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-weak: #e6efff;
-      --border: #e5e7eb;
-      --radius: 16px;
-      --shadow: 0 6px 24px rgba(0,0,0,.06);
+    :root{
+      --bg:#f7f9fc;--card:#fff;--text:#111827;--muted:#6b7280;--primary:#2563eb;
+      --primary-weak:#e6efff;--border:#e5e7eb;--radius:16px;--shadow:0 6px 24px rgba(0,0,0,.06)
     }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; color: var(--text); background: var(--bg); }
-    .appbar { position: sticky; top: 0; z-index: 10; background: var(--card); border-bottom: 1px solid var(--border); padding: 18px 20px; font-weight: 700; letter-spacing:.2px; }
-    .container { max-width: 520px; margin: 0 auto; padding: 18px; }
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    h1 { font-size: 20px; margin: 8px 0 14px; }
-    p.muted { color: var(--muted); font-size: 12px; margin-top: -2px; }
-    .stack { display: grid; gap: 12px; }
-    .buttons { display: grid; gap: 12px; }
-    .btn { display: inline-flex; align-items:center; justify-content:center; gap:8px; padding: 12px 16px; border-radius: 999px; border: 1px solid transparent; background: var(--primary); color:#fff; font-weight:600; cursor:pointer; box-shadow: var(--shadow); transition: transform .05s ease; text-decoration: none; }
-    .btn:active { transform: translateY(1px); }
-    .btn.ghost { background: transparent; border-color: var(--border); color: var(--text); box-shadow:none; }
-    .btn.weak { background: var(--primary-weak); color: var(--primary); box-shadow: none; border-color: transparent; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .input, .select, .textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; font: inherit; }
-    .textarea { min-height: 70px; resize: vertical; }
-    .card { background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow); }
-    .card-title { font-weight: 700; margin-bottom: 4px; }
-    .small { color: var(--muted); font-size: 12px; }
-    .card-actions { display:flex; justify-content:flex-end; margin-top: 8px; }
-    .topbar { display:flex; align-items:center; gap:8px; margin: 6px 0 14px; }
-    .back { cursor:pointer; font-size:14px; color: var(--primary); text-decoration: none; }
-    .divider { height:1px; background: var(--border); margin: 4px 0 10px; }
-
-    /* Intro/Login */
-    .intro { display: grid; place-items: center; min-height: calc(100dvh - 64px); padding-top: 12px; }
-    .intro-card { width: 100%; max-width: 420px; padding: 22px; border:1px solid var(--border); background: var(--card); border-radius: 20px; box-shadow: var(--shadow); }
-    .logo-wrap { display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom: 14px; }
-    .logo { width: 120px; height: 120px; border-radius: 24px; object-fit: contain; border:1px dashed var(--border); background:#fafafa; }
-    .logo-help { font-size:12px; color: var(--muted); text-align:center; }
-    .links { display:flex; justify-content:space-between; align-items:center; margin-top: 4px; }
-    .link { color: var(--primary); text-decoration: none; font-size: 14px; }
-
-    /* Tabs */
-    .tabs { display:flex; gap:8px; margin: 8px 0 16px; }
-    .tab { padding:10px 14px; border:1px solid var(--border); border-radius: 999px; background:#fff; cursor:pointer; }
-    .tab.active { background: var(--primary); color:#fff; border-color: transparent; }
-
-    /* Listas */
-    .list { display:grid; gap:10px; }
-
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:var(--bg)}
+    .appbar{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--border);padding:18px 20px;font-weight:700}
+    .container{max-width:520px;margin:0 auto;padding:18px}
+    .screen{display:none}.screen.active{display:block}
+    h1{font-size:20px;margin:8px 0 14px}
+    p.muted{color:var(--muted);font-size:12px;margin-top:-2px}
+    .stack{display:grid;gap:12px}
+    .buttons{display:grid;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:999px;border:1px solid transparent;background:var(--primary);color:#fff;font-weight:600;cursor:pointer;box-shadow:var(--shadow);text-decoration:none;transition:transform .05s}
+    .btn:active{transform:translateY(1px)}
+    .btn.ghost{background:transparent;border-color:var(--border);color:var(--text);box-shadow:none}
+    .btn.weak{background:var(--primary-weak);color:var(--primary);box-shadow:none;border-color:transparent}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .input,.textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font:inherit}
+    .textarea{min-height:70px;resize:vertical}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+    .card-title{font-weight:700;margin-bottom:4px}
+    .small{color:var(--muted);font-size:12px}
+    .card-actions{display:flex;justify-content:flex-end;margin-top:8px}
+    .topbar{display:flex;align-items:center;gap:8px;margin:6px 0 14px}
+    .back{cursor:pointer;font-size:14px;color:var(--primary);text-decoration:none}
+    .divider{height:1px;background:var(--border);margin:8px 0 12px}
+    /* Login (igual ao exemplo) */
+    .intro{display:grid;place-items:center;min-height:calc(100dvh - 64px)}
+    .intro-card{width:100%;max-width:420px;padding:22px;border:1px solid var(--border);background:var(--card);border-radius:20px;box-shadow:var(--shadow)}
+    .brand{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:10px}
+    .logo{width:96px;height:96px;border-radius:20px;object-fit:cover;border:1px dashed var(--border);background:#fafafa}
+    .links{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+    .link{color:var(--primary);text-decoration:none;font-size:14px}
     /* Modal */
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.28); display:none; align-items:center; justify-content:center; padding: 18px; z-index: 50; }
-    .modal { width:100%; max-width: 440px; background: var(--card); border:1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); padding: 18px; }
-    .modal h2 { margin: 0 0 6px; font-size: 18px; }
-    .modal .muted { margin: 0 0 12px; }
-    .modal .actions { display:flex; gap:10px; justify-content:flex-end; }
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.28);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+    .modal{width:100%;max-width:440px;background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px}
+    .modal h2{margin:0 0 6px;font-size:18px}
+    .modal .actions{display:flex;gap:10px;justify-content:flex-end}
+    .list{display:grid;gap:10px}
   </style>
 </head>
 <body>
-  <header class="appbar">StudyMatch</header>
-  <main class="container">
+<header class="appbar">StudyMatch</header>
+<main class="container">
 
-    <!-- LOGIN / PRIMEIRO ACESSO -->
-    <section id="screen-auth" class="screen active">
-      <div class="intro">
-        <div class="intro-card">
-          <div class="logo-wrap">
-            <img id="app-logo" class="logo" alt="Logo StudyMatch" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect width='100%25' height='100%25' rx='24' fill='%23fafafa' stroke='%23e5e7eb'/%3E%3Ctext x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Inter' font-size='20' fill='%239aa0a6'%3EStudyMatch%3C/text%3E%3C/svg%3E">
-            <div class="logo-help">Faça login para continuar</div>
-          </div>
-          <div class="stack">
-            <input id="login-nome" class="input" placeholder="Seu nome" />
-            <button id="btn-login" class="btn">Entrar</button>
+  <!-- LOGIN / TELA INICIAL (como no print) -->
+  <section id="screen-auth" class="screen">
+    <div class="intro">
+      <div class="intro-card">
+        <div class="brand">
+          <img class="logo" alt="Logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Crect width='100%25' height='100%25' rx='20' fill='%231f3b7b'/%3E%3Cpath fill='%23fff' d='M98 50v40H42V50l28 10 28-10Zm-28 6L42 46l28-10 28 10-28 10Z'/%3E%3C/svg%3E">
+        </div>
+        <div class="stack">
+          <input id="auth-email" class="input" type="email" placeholder="E-mail" />
+          <input id="auth-pass" class="input" type="password" placeholder="Senha" />
+          <button class="btn" id="btn-login">Entrar</button>
+          <div class="links">
+            <a class="link" data-goto="screen-signup">Criar conta</a>
+            <a class="link" data-goto="screen-forgot">Esqueceu sua senha?</a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- APP -->
-    <section id="screen-app" class="screen">
-      <div class="tabs">
-        <button class="tab active" data-tab="notas">Notas</button>
-        <button class="tab" data-tab="grupos">Grupos</button>
-      </div>
-
-      <!-- NOTAS -->
-      <div id="tab-notas">
-        <h1>Registrar Nota</h1>
-        <p class="muted">Quando a nota for maior que 8,5, vamos sugerir adicionar ao grupo da matéria.</p>
-        <div class="card stack">
-          <div class="row">
-            <input id="nota-nome" class="input" placeholder="Nome do aluno" />
-            <input id="nota-materia" class="input" placeholder="Matéria (ex.: Cálculo I)" />
-          </div>
-          <div class="row">
-            <input id="nota-valor" type="number" step="0.1" min="0" max="10" class="input" placeholder="Nota (0 a 10)" />
-            <input id="nota-observ" class="input" placeholder="Observação (opcional)" />
-          </div>
-          <div class="card-actions">
-            <button id="btn-salvar-nota" class="btn">Salvar nota</button>
-          </div>
-        </div>
-
-        <h1>Histórico</h1>
-        <div id="lista-notas" class="list"></div>
-      </div>
-
-      <!-- GRUPOS -->
-      <div id="tab-grupos" style="display:none;">
-        <h1>Seus grupos</h1>
-        <div id="lista-grupos" class="list"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- MODAL: Sugerir auxiliar grupo -->
-  <div id="modal-grupo" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal">
-      <h2 id="modal-title">Sugerir participação</h2>
-      <p id="modal-msg" class="muted"></p>
-      <div class="actions">
-        <button id="btn-modal-nao" class="btn ghost">Não</button>
-        <button id="btn-modal-sim" class="btn">Sim</button>
       </div>
     </div>
+  </section>
+
+  <!-- CRIAR CONTA -->
+  <section id="screen-signup" class="screen">
+    <div class="topbar"><a class="back" data-goto="screen-auth">⟵ Voltar</a></div>
+    <h1>Criar conta</h1>
+    <div class="stack">
+      <input id="su-name" class="input" placeholder="Nome" />
+      <input id="su-email" class="input" type="email" placeholder="E-mail" />
+      <input id="su-pass" class="input" type="password" placeholder="Senha" />
+      <button class="btn" id="btn-signup">Cadastrar</button>
+    </div>
+  </section>
+
+  <!-- ESQUECEU SENHA -->
+  <section id="screen-forgot" class="screen">
+    <div class="topbar"><a class="back" data-goto="screen-auth">⟵ Voltar</a></div>
+    <h1>Recuperar senha</h1>
+    <div class="stack">
+      <input id="fp-email" class="input" type="email" placeholder="Seu e-mail" />
+      <button class="btn" id="btn-forgot">Enviar link</button>
+      <p class="small" id="fp-msg"></p>
+    </div>
+  </section>
+
+  <!-- HOME (novo) -->
+  <section id="screen-home" class="screen">
+    <h1>Olá, <span id="username">Aluno</span> 👋</h1>
+    <div class="buttons">
+      <button class="btn" data-goto="screen-notas">Registrar/Ver notas</button>
+      <button class="btn" data-goto="screen-grupos">Seus grupos</button>
+      <button class="btn ghost" id="btn-logout">Sair</button>
+    </div>
+  </section>
+
+  <!-- NOTAS -->
+  <section id="screen-notas" class="screen">
+    <div class="topbar"><a class="back" data-goto="screen-home">⟵ Voltar</a></div>
+    <h1>Registrar Nota</h1>
+    <p class="muted">Se a nota for maior que 8,5, sugerimos participar do grupo da matéria.</p>
+    <div class="card stack">
+      <div class="row">
+        <input id="nota-nome" class="input" placeholder="Nome do aluno" />
+        <input id="nota-materia" class="input" placeholder="Matéria (ex.: Cálculo I)" />
+      </div>
+      <div class="row">
+        <input id="nota-valor" type="number" step="0.1" min="0" max="10" class="input" placeholder="Nota (0 a 10)" />
+        <input id="nota-observ" class="input" placeholder="Observação (opcional)" />
+      </div>
+      <div class="card-actions">
+        <button id="btn-salvar-nota" class="btn">Salvar nota</button>
+      </div>
+    </div>
+
+    <h1>Histórico</h1>
+    <div id="lista-notas" class="list"></div>
+  </section>
+
+  <!-- GRUPOS -->
+  <section id="screen-grupos" class="screen">
+    <div class="topbar"><a class="back" data-goto="screen-home">⟵ Voltar</a></div>
+    <h1>Seus grupos</h1>
+    <div id="lista-grupos" class="list"></div>
+  </section>
+</main>
+
+<!-- MODAL: sugestão de grupo -->
+<div id="modal-grupo" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <h2 id="modal-title">Sugerir participação</h2>
+    <p id="modal-msg" class="small"></p>
+    <div class="actions">
+      <button id="btn-modal-nao" class="btn ghost">Não</button>
+      <button id="btn-modal-sim" class="btn">Sim</button>
+    </div>
   </div>
+</div>
 
-  <script>
-    // --- Estado & Persistência ---
-    const store = {
-      get user() { return JSON.parse(localStorage.getItem('sm_user') || 'null'); },
-      set user(v) { localStorage.setItem('sm_user', JSON.stringify(v)); },
+<!-- MODAL: ver membros do grupo (NOVO) -->
+<div id="modal-membros" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-membros-title">
+  <div class="modal">
+    <h2 id="modal-membros-title">Membros do grupo</h2>
+    <div id="modal-membros-content" class="stack"></div>
+    <div class="actions">
+      <button id="btn-membros-fechar" class="btn">Fechar</button>
+    </div>
+  </div>
+</div>
 
-      get notas() { return JSON.parse(localStorage.getItem('sm_notas') || '[]'); },
-      set notas(v) { localStorage.setItem('sm_notas', JSON.stringify(v)); },
+<script>
+  // ---------------- Estado & Persistência ----------------
+  const store = {
+    get user(){ return JSON.parse(localStorage.getItem('sm_user')||'null'); },
+    set user(v){ localStorage.setItem('sm_user', JSON.stringify(v)); },
 
-      get grupos() { return JSON.parse(localStorage.getItem('sm_grupos') || '[]'); },
-      set grupos(v) { localStorage.setItem('sm_grupos', JSON.stringify(v)); },
-    };
+    get notas(){ return JSON.parse(localStorage.getItem('sm_notas')||'[]'); },
+    set notas(v){ localStorage.setItem('sm_notas', JSON.stringify(v)); },
 
-    // --- Navegação simples ---
-    const screens = {
-      auth: document.getElementById('screen-auth'),
-      app: document.getElementById('screen-app'),
-    };
-    function go(screen) {
-      Object.values(screens).forEach(s => s.classList.remove('active'));
-      screens[screen].classList.add('active');
+    get grupos(){ return JSON.parse(localStorage.getItem('sm_grupos')||'[]'); },
+    set grupos(v){ localStorage.setItem('sm_grupos', JSON.stringify(v)); },
+
+    get current(){ return localStorage.getItem('sm_current')||'screen-auth'; },
+    set current(v){ localStorage.setItem('sm_current', v); }
+  };
+
+  // ---------------- Navegação (com salvar tela) ----------------
+  function goto(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0,behavior:'instant'});
+    store.current = id;
+  }
+  document.querySelectorAll('[data-goto]').forEach(el=>{
+    el.addEventListener('click',()=>goto(el.getAttribute('data-goto')));
+  });
+
+  // Restaura tela inicial
+  if(store.user){ renderUser(); goto('screen-home'); }
+  else { goto('screen-auth'); }
+
+  // ---------------- Auth ----------------
+  document.getElementById('btn-login').addEventListener('click',()=>{
+    const email = (document.getElementById('auth-email').value||'').trim();
+    const pass  = (document.getElementById('auth-pass').value||'').trim();
+    if(!email || !pass) return alert('Preencha e-mail e senha.');
+    const name = email.split('@')[0] || 'Aluno';
+    store.user = { name, email };
+    renderUser();
+    // Pré-preenche o nome do formulário de notas
+    document.getElementById('nota-nome').value = name;
+    goto('screen-home');
+  });
+
+  document.getElementById('btn-signup').addEventListener('click',()=>{
+    const name  = (document.getElementById('su-name').value||'').trim();
+    const email = (document.getElementById('su-email').value||'').trim();
+    const pass  = (document.getElementById('su-pass').value||'').trim();
+    if(!name || !email || !pass) return alert('Preencha nome, e-mail e senha.');
+    store.user = { name, email };
+    renderUser();
+    document.getElementById('nota-nome').value = name;
+    goto('screen-home');
+  });
+
+  document.getElementById('btn-forgot').addEventListener('click',()=>{
+    const email = (document.getElementById('fp-email').value||'').trim();
+    if(!email) return alert('Informe seu e-mail.');
+    document.getElementById('fp-msg').textContent = 'Se existir uma conta com esse e-mail, enviaremos um link de recuperação (simulação).';
+  });
+
+  document.getElementById('btn-logout').addEventListener('click',()=>{
+    localStorage.removeItem('sm_user');
+    store.current = 'screen-auth';
+    goto('screen-auth');
+  });
+
+  function renderUser(){
+    const u = store.user || { name:'Aluno' };
+    document.getElementById('username').textContent = u.name;
+  }
+
+  // ---------------- Notas ----------------
+  const listaNotas = document.getElementById('lista-notas');
+  const listaGrupos = document.getElementById('lista-grupos');
+
+  function renderNotas(){
+    const notas = store.notas.slice().reverse();
+    listaNotas.innerHTML = notas.map(n=>`
+      <div class="card">
+        <div class="card-title">${n.nome} • ${n.materia}</div>
+        <div class="small">Nota: <b>${n.valor.toFixed(1)}</b>${n.obs ? ' • '+n.obs : ''}</div>
+        <div class="small">Data: ${new Date(n.ts).toLocaleString()}</div>
+      </div>
+    `).join('') || '<div class="small muted">Sem notas registradas ainda.</div>';
+  }
+
+  // ----------- Helpers: nomes aleatórios -----------
+  const FIRST_NAMES = ["Ana","Bruno","Carla","Diego","Eduarda","Felipe","Gabriela","Henrique","Isabela","João","Karen","Luís","Mariana","Natalia","Otávio","Paula","Rafael","Sofia","Thiago","Vinícius"];
+  const LAST_NAMES  = ["Silva","Santos","Oliveira","Souza","Pereira","Lima","Ferreira","Almeida","Gomes","Costa","Ribeiro","Carvalho","Araujo","Martins","Rocha","Barbosa","Dias","Teixeira","Correia","Moreira"];
+
+  function uniqueRandomNames(qtd=10){
+    const set = new Set();
+    while(set.size < Math.min(qtd, 10)){
+      const f = FIRST_NAMES[Math.floor(Math.random()*FIRST_NAMES.length)];
+      const l = LAST_NAMES[Math.floor(Math.random()*LAST_NAMES.length)];
+      set.add(`${f} ${l}`);
     }
-    if (store.user) go('app');
+    return Array.from(set);
+  }
 
-    // Tabs
-    const tabBtns = Array.from(document.querySelectorAll('.tab'));
-    const tabNotas = document.getElementById('tab-notas');
-    const tabGrupos = document.getElementById('tab-grupos');
-    function setTab(name) {
-      tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-      tabNotas.style.display = name === 'notas' ? '' : 'none';
-      tabGrupos.style.display = name === 'grupos' ? '' : 'none';
+  // ----------- Modal de membros -----------
+  const modalMembros = document.getElementById('modal-membros');
+  const modalMembrosContent = document.getElementById('modal-membros-content');
+  const btnMembrosFechar = document.getElementById('btn-membros-fechar');
+
+  function openMembrosModal(materia){
+    const grupos = store.grupos;
+    let g = grupos.find(x => (x.materia||'').toLowerCase() === (materia||'').toLowerCase());
+    if(!g){
+      // não deve acontecer (só abre a partir da lista), mas tratamos mesmo assim
+      modalMembrosContent.innerHTML = '<div class="small muted">Grupo não encontrado.</div>';
+      modalMembros.style.display = 'flex';
+      return;
     }
-    tabBtns.forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+    // Se não há membros, gera até 10 nomes aleatórios
+    if(!g.membros || !g.membros.length){
+      g.membros = uniqueRandomNames(10);
+      store.grupos = grupos; // persiste
+      renderGrupos(); // atualiza contagem no card
+    }
+    const nomes = (g.membros || []).slice(0, 10);
+    if(!nomes.length){
+      modalMembrosContent.innerHTML = '<div class="small muted">Nenhum membro ainda.</div>';
+    }else{
+      modalMembrosContent.innerHTML = nomes.map(n => `<div class="card"><div class="small">${n}</div></div>`).join('');
+    }
+    modalMembros.style.display = 'flex';
+  }
+  function closeMembrosModal(){ modalMembros.style.display = 'none'; }
+  btnMembrosFechar.addEventListener('click', closeMembrosModal);
+  modalMembros.addEventListener('click', e => { if(e.target === modalMembros) closeMembrosModal(); });
 
-    // Login
-    document.getElementById('btn-login').addEventListener('click', () => {
-      const nome = (document.getElementById('login-nome').value || '').trim();
-      if (!nome) return alert('Digite seu nome.');
-      store.user = { nome };
-      go('app');
-      renderAll();
-    });
-
-    // --- Renderizadores ---
-    const listaNotas = document.getElementById('lista-notas');
-    const listaGrupos = document.getElementById('lista-grupos');
-
-    function renderNotas() {
-      const notas = store.notas.slice().reverse();
-      listaNotas.innerHTML = notas.map(n => `
-        <div class="card">
-          <div class="card-title">${n.nome} • ${n.materia}</div>
-          <div class="small">Nota: <b>${n.valor.toFixed(1)}</b>${n.obs ? ' • ' + n.obs : ''}</div>
-          <div class="small">Data: ${new Date(n.ts).toLocaleString()}</div>
+  function renderGrupos(){
+    const grupos = store.grupos;
+    if(!grupos.length){
+      listaGrupos.innerHTML = '<div class="small muted">Nenhum grupo ainda.</div>';
+      return;
+    }
+    listaGrupos.innerHTML = grupos.map(g=>`
+      <div class="card">
+        <div class="card-title">${g.materia}</div>
+        <div class="small">
+          <a href="#" class="link ver-membros" data-materia="${g.materia}">
+            Membros (${(g.membros && g.membros.length) ? g.membros.length : 0})
+          </a>
         </div>
-      `).join('') || '<div class="small muted">Sem notas registradas ainda.</div>';
+      </div>
+    `).join('');
+  }
+
+  // Delegação de clique para "Membros"
+  listaGrupos.addEventListener('click', (e)=>{
+    const a = e.target.closest('.ver-membros');
+    if(a){
+      e.preventDefault();
+      openMembrosModal(a.getAttribute('data-materia'));
+    }
+  });
+
+  function renderAll(){ renderNotas(); renderGrupos(); }
+  renderAll();
+
+  const inputNome = document.getElementById('nota-nome');
+  const inputMateria = document.getElementById('nota-materia');
+  const inputValor = document.getElementById('nota-valor');
+  const inputObs = document.getElementById('nota-observ');
+
+  // Pré-preenche nome se já logado
+  if(store.user) inputNome.value = store.user.name;
+
+  document.getElementById('btn-salvar-nota').addEventListener('click',()=>{
+    const nome = (inputNome.value||'').trim();
+    const materia = (inputMateria.value||'').trim();
+    const valor = parseFloat(inputValor.value);
+    const obs = (inputObs.value||'').trim();
+
+    if(!nome || !materia || isNaN(valor)) return alert('Preencha nome, matéria e nota.');
+    if(valor<0 || valor>10) return alert('A nota deve ser entre 0 e 10.');
+
+    const notas = store.notas;
+    notas.push({ nome, materia, valor, obs, ts: Date.now() });
+    store.notas = notas;
+    renderNotas();
+
+    if(valor > 8.5){
+      openModal(nome, materia);
+    }else{
+      inputValor.value=''; inputObs.value='';
+    }
+  });
+
+  // ---------------- Modal > 8.5 ----------------
+  const modal = document.getElementById('modal-grupo');
+  const modalMsg = document.getElementById('modal-msg');
+  const btnNao = document.getElementById('btn-modal-nao');
+  const btnSim = document.getElementById('btn-modal-sim');
+  let pendingSuggestion = null;
+
+  function openModal(nome, materia){
+    modalMsg.textContent = `Deseja auxiliar o grupo da matéria “${materia}”?`;
+    modal.style.display='flex';
+    pendingSuggestion = { nome, materia };
+  }
+  function closeModal(){ modal.style.display='none'; pendingSuggestion=null; }
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+  btnNao.addEventListener('click', closeModal);
+  btnSim.addEventListener('click', ()=>{
+    if(!pendingSuggestion) return closeModal();
+    const { nome, materia } = pendingSuggestion;
+    const grupos = store.grupos;
+    let g = grupos.find(x => x.materia.toLowerCase() === materia.toLowerCase());
+    if(!g){ g = { materia, membros: [] }; grupos.push(g); }
+    if(!g.membros.includes(nome)) g.membros.push(nome);
+    store.grupos = grupos;
+    closeModal();
+    renderGrupos();
+    goto('screen-grupos');
+  });
+
+  // Se o usuário tinha uma tela salva, vai para ela
+  const saved = store.current;
+  if(saved && document.getElementById(saved)){
+    if(saved==='screen-auth' && store.user) goto('screen-home');
+    else goto(saved);
+  }
+</script>
+<script>
+// === Monitores por matéria (a partir dos grupos existentes) ===
+(function () {
+  // sinônimos/variações mapeados para uma chave canônica
+  const SUBJECT_ALIASES = {
+    'matematica': ['matemática','matematica','mat','mat 1','matemática basica','matematica basica'],
+    'calculo-1': ['cálculo 1','calculo 1','cálculo i','calculo i','calc 1','c1'],
+    'calculo-2': ['cálculo 2','calculo 2','cálculo ii','calculo ii','calc 2','c2'],
+    'calculo-3': ['cálculo 3','calculo 3','cálculo iii','calculo iii','calc 3','c3'],
+    'fisica': ['física','fisica','física 1','fisica 1','physics'],
+    'quimica': ['química','quimica','chemistry'],
+    'algebra-linear': ['álgebra linear','algebra linear','algebra','linear algebra'],
+    'estatistica': ['estatística','estatistica','probabilidade e estatística','prob e estat','probabilidade'],
+    'programacao': ['programação','programacao','intro programação','introdução à programação','cs101'],
+    'algoritmos': ['algoritmos','lógica de programação','logica de programacao'],
+    'estrutura-de-dados': ['estrutura de dados','estruturas de dados','ed','data structures'],
+    'banco-de-dados': ['banco de dados','bd','database'],
+    'poo': ['poo','programação orientada a objetos','programacao orientada a objetos']
+  };
+
+  // normaliza texto: minúsculo, sem acentos, troca romanos (i/ii/iii/iv/v) por números
+  const normalize = (s='') =>
+    s.toLowerCase()
+     .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+     .replace(/[\.\-_/]+/g,' ')
+     .replace(/\b(i{1,3}|iv|v)\b/g, m => ({i:'1',ii:'2',iii:'3',iv:'4',v:'5'}[m])) // romanos → números
+     .replace(/\s+/g,' ').trim();
+
+  // devolve uma chave canônica para a matéria (usando aliases) ou a string normalizada
+  function toCanonical(subject){
+    const n = normalize(subject);
+    for (const [key, syns] of Object.entries(SUBJECT_ALIASES)) {
+      if (syns.some(s => normalize(s) === n)) return key;
+    }
+    return n;
+  }
+
+  // API pública
+  window.getMonitoresPorMateria = function(materia){
+    if (!materia) return [];
+    const grupos = JSON.parse(localStorage.getItem('sm_grupos') || '[]');
+
+    // 1) tenta casar por chave canônica (robusto a variações)
+    const targetKey = toCanonical(materia);
+    let match = grupos.find(g => toCanonical(g.materia) === targetKey);
+
+    // 2) fallback: aproximação por inclusão (ex.: "fisica" vs "fisica 1")
+    if (!match) {
+      const nIn = normalize(materia);
+      const scored = grupos.map(g => {
+        const gn = normalize(g.materia);
+        let score = 0;
+        if (gn === nIn) score = 3;
+        else if (gn.includes(nIn) || nIn.includes(gn)) score = 2;
+        else if (toCanonical(g.materia) === targetKey) score = 1;
+        return { g, score };
+      }).filter(x => x.score > 0).sort((a,b) => b.score - a.score);
+      if (scored.length) match = scored[0].g;
     }
 
-    function renderGrupos() {
-      const grupos = store.grupos;
-      if (!grupos.length) {
-        listaGrupos.innerHTML = '<div class="small muted">Nenhum grupo ainda.</div>';
-        return;
-      }
-      listaGrupos.innerHTML = grupos.map(g => `
-        <div class="card">
-          <div class="card-title">${g.materia}</div>
-          <div class="small">Membros: ${g.membros.join(', ') || '—'}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderAll() { renderNotas(); renderGrupos(); }
-
-    // --- Salvar nota & modal > 8.5 ---
-    const inputNome = document.getElementById('nota-nome');
-    const inputMateria = document.getElementById('nota-materia');
-    const inputValor = document.getElementById('nota-valor');
-    const inputObs = document.getElementById('nota-observ');
-
-    const modal = document.getElementById('modal-grupo');
-    const modalMsg = document.getElementById('modal-msg');
-    const btnNao = document.getElementById('btn-modal-nao');
-    const btnSim = document.getElementById('btn-modal-sim');
-
-    let pendingSuggestion = null; // { nome, materia }
-
-    function openModal(nome, materia) {
-      modalMsg.textContent = `Deseja auxiliar o grupo da matéria “${materia}”?`;
-      modal.style.display = 'flex';
-      pendingSuggestion = { nome, materia };
-    }
-    function closeModal() {
-      modal.style.display = 'none';
-      pendingSuggestion = null;
-    }
-
-    btnNao.addEventListener('click', () => {
-      closeModal(); // nada acontece
-    });
-
-    btnSim.addEventListener('click', () => {
-      if (!pendingSuggestion) return closeModal();
-      const { nome, materia } = pendingSuggestion;
-      // Adiciona ao grupo (cria se não existir) sem duplicar membro
-      const grupos = store.grupos;
-      let g = grupos.find(x => x.materia.toLowerCase() === materia.toLowerCase());
-      if (!g) {
-        g = { materia, membros: [] };
-        grupos.push(g);
-      }
-      if (!g.membros.includes(nome)) g.membros.push(nome);
-      store.grupos = grupos;
-      renderGrupos();
-      // Vai para a aba de grupos
-      setTab('grupos');
-      closeModal();
-    });
-
-    document.getElementById('btn-salvar-nota').addEventListener('click', () => {
-      const nome = (inputNome.value || '').trim();
-      const materia = (inputMateria.value || '').trim();
-      const valor = parseFloat(inputValor.value);
-      const obs = (inputObs.value || '').trim();
-
-      if (!nome || !materia || isNaN(valor)) {
-        alert('Preencha nome, matéria e nota.');
-        return;
-      }
-      if (valor < 0 || valor > 10) {
-        alert('A nota deve ser entre 0 e 10.');
-        return;
-      }
-
-      const notas = store.notas;
-      notas.push({ nome, materia, valor, obs, ts: Date.now() });
-      store.notas = notas;
-      renderNotas();
-
-      // Se maior que 8,5 sugere auxiliar o grupo
-      if (valor > 8.5) {
-        openModal(nome, materia);
-      } else {
-        // Limpa campos e mantém na aba
-        inputValor.value = '';
-        inputObs.value = '';
-      }
-    });
-
-    // Fecha modal clicando fora
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-    // Inicializa
-    renderAll();
-  </script>
+    if (!match) return [];
+    // retorna somente nomes, únicos e ordenados
+    const nomes = Array.from(new Set((match.membros || []).filter(Boolean)));
+    return nomes.sort((a,b) => a.localeCompare(b, 'pt-BR', { sensitivity:'base' }));
+  };
+})();
+</script>
 </body>
 </html>
